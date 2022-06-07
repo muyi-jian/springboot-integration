@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/helloWorld/helloWorld.iml" filepath="$PROJECT_DIR$/helloWorld/helloWorld.iml" />
       <module fileurl="file://$PROJECT_DIR$/integrate-test/integrate-test.iml" filepath="$PROJECT_DIR$/integrate-test/integrate-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-annotation/springboot-annotation.iml" filepath="$PROJECT_DIR$/springboot-annotation/springboot-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-integration.iml" filepath="$PROJECT_DIR$/springboot-integration.iml" />

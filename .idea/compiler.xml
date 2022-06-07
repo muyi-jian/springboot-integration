@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="springboot-web" />
         <module name="integrate-test" />
-        <module name="helloWorld" />
         <module name="springboot-annotation" />
       </profile>
     </annotationProcessing>
