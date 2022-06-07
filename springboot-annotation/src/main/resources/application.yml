@@ -1,0 +1,15 @@
+server:
+  port: 8089
+
+person:
+  lastName: 张三
+  age: 18
+  boss: false
+  birth: 1993/12/20
+  lists:
+    - lisi
+    - wangwu
+  maps: {k1: v1,k2: 12}
+  dog:
+    name: 泰迪
+    age: 5

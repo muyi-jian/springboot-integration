@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.integrate.test.mapper.TestUserMapper">
+    <resultMap id="BaseResultMap" type="TestUser">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="USERNO" jdbcType="VARCHAR" property="userNo"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="userName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,USERNAME,USERNO
+    </sql>
+    <!--根据用户名密码查询用户信息-->
+    <!--application.yml 中通过 type-aliases-package 指定了实体类的为了，因此-->
+    <select id="getUserInfo" resultType="TestUser">
+        select *
+        from testuser
+        where USERNAME = #{userName,jdbcType=VARCHAR}
+    </select>
+</mapper>

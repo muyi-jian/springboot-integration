@@ -1,0 +1,30 @@
+
+#spring:
+#  datasource:
+#    username: root
+#    password: 123456
+#    url: jdbc:mysql://localhost:3308/demosql
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#数据源连接信息
+spring:
+  datasource:
+    username: root
+    password: 123456
+    #?serverTimezone=UTC解决时区的报错
+    url: jdbc:mysql://localhost:3308/demosql?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8081
+#mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml 指定全局配置文件的位置
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  #扫描实体类的位置,在此处指明扫描实体类的包，在 mapper.xml 中就可以不写实体类的全路径名
+  type-aliases-package: com.integrate.test.entities
+  configuration:
+    map-underscore-to-camel-case: true  #默认开启，可以不用设置
+#  mapper-locations: classpath:mybatis/mapper/*.xml  指定sql映射文件的位置
+# 在当前磁盘的根路径下创建spring文件夹和里面的log文件夹；使用spring.log 作为默认文件
+#logging:
+#  file:
+#    path: /JetBrains/ideaMyself/springboot-integration/integrate-test/log/

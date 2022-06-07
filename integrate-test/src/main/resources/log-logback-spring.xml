@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--spring boot提供的logback的默认配置,必须引用，否则日志无法输出-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--配置集中管理的属性-->
+    <property resource="application.properties"/>
+    <!--定义日志文件的存储地址 -->
+    <property name="LOG_HOME" value="integrate-test/logs"/>
+    <property name="FILE_NAME" value="${LOG_HOME}/%d{yyyy-MM-dd}"/>
+    <!--定义自己个日志格式-->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %c{50} %M %L -- %m%n"/>
+    <!--
+        %d{yyyy-MM-dd HH:mm:ss.SSS} 日期格式
+        %c 类的完整名称
+        %logger 类的完整名称
+        %M 方法名
+        %L 行号
+        %thread 线程
+        %m 信息
+        %n 换行
+        %-5level 信息级别
+    -->
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${FILE_NAME}_all.txt</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>7</MaxHistory>
+            <totalSizeCap>512MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+            <!--<pattern>%JsonOutPut %n</pattern>-->
+        </encoder>
+    </appender>
+    <!-- 按照每天生成日志文件过滤消息级别 -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${FILE_NAME}_err.txt</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>7</MaxHistory>
+            <totalSizeCap>512MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN}</pattern>
+            <!--<pattern>%JsonOutPut %n</pattern>-->
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--设置过滤级别-->
+            <level>ERROR</level>
+            <!--过滤级别以上的处理方式-->
+            <onMatch>ACCEPT</onMatch>
+            <!--过滤级别以下的处理方式-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 按照每天生成HTML日志文件 -->
+    <appender name="FILE_HTML" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${FILE_NAME}_all.html</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>7</MaxHistory>
+            <totalSizeCap>512MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}%-5level%thread%c{50}%M%L%m</pattern>
+            </layout>
+        </encoder>
+    </appender>
+    <!--异步日志-->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!--指定需要异步打印的日志-->
+        <appender-ref ref="FILE" />
+    </appender>
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="FILE_HTML"/>
+        <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <!--自定义指定包的日志级别-->
+    <logger name="com.example.log.LogApplication" level="ERROR"/>
+</configuration>
+
